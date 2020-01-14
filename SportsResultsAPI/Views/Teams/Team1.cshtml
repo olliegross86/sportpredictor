@@ -1,0 +1,664 @@
+﻿@model TeamsModel
+@{
+    ViewData["Title"] = @Model.Teams[1].ToString().Split('*')[0];
+}
+
+@*@<h1>(@Model.Teams[1].ToString().Split('*')[0])</h1>*@
+
+<body style="background-image: url(@Model.Teams[1].ToString().Split('*')[4]); background-repeat: no-repeat; background-size: cover;">
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+    <div class="container-fluid" style="position:absolute; padding-right:100px">
+        <table id="table" width="90%" align="right">
+            <tr>
+                <td>
+                    <img align="right" id="logo" src=@Model.Teams[1].ToString().Split('*')[6] style="width:10%; height:auto;" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+
+    @{
+        Model.avgHomeScoreList = new List<int>();
+        Model.avgAwayScoreList = new List<int>();
+        Model.avgHomeConcededList = new List<int>();
+        Model.avgAwayConcededList = new List<int>();
+
+    }
+
+    @for (int i = 0; i < Model.Results.Count; i++)
+    {
+        var homeTeam = @Model.Results.ToList()[i].ToString().Split(',')[0];
+        var homeScore = @Model.Results.ToList()[i].ToString().Split(',')[1];
+        var awayTeam = @Model.Results.ToList()[i].ToString().Split(',')[2];
+        var awayScore = @Model.Results.ToList()[i].ToString().Split(',')[3];
+        var teamsTeam = @Model.Teams[1].ToString().Split('*')[0];
+        var homeScoreINT = Int32.Parse(homeScore);
+        var awayScoreINT = Int32.Parse(awayScore);
+
+        if (homeTeam.Contains(teamsTeam) && homeScore != "")
+        {
+
+            Model.avgHomeScoreList.Add(homeScoreINT);
+        }
+        else if (awayTeam.Contains(teamsTeam) && awayScore != "")
+        {
+
+            Model.avgAwayScoreList.Add(awayScoreINT);
+        }
+
+        else
+        {
+            continue;
+        }
+    }
+
+    @for (int i = 0; i < Model.Results.Count; i++)
+    {
+        var homeTeam = @Model.Results.ToList()[i].ToString().Split(',')[0];
+        var homeScore = @Model.Results.ToList()[i].ToString().Split(',')[1];
+        var awayTeam = @Model.Results.ToList()[i].ToString().Split(',')[2];
+        var awayScore = @Model.Results.ToList()[i].ToString().Split(',')[3];
+        var teamsTeam = @Model.Teams[1].ToString().Split('*')[0];
+        var awayteamsTeam = @Model.Fixtures.ToList()[i].ToString().Split(',')[1];
+
+        if (homeTeam.Contains(teamsTeam) && awayScore != "")
+        {
+
+            Model.avgHomeConcededList.Add(Int32.Parse(awayScore));
+        }
+        else if (awayTeam.Contains(teamsTeam) && awayScore != "")
+        {
+
+            Model.avgAwayConcededList.Add(Int32.Parse(homeScore));
+        }
+
+        else
+        {
+            continue;
+        }
+    }
+
+    @{
+        Model.avgHomeScore = (Model.avgHomeScoreList.Sum() / Model.avgHomeScoreList.Count());
+        Model.avgAwayScore = (Model.avgAwayScoreList.Sum() / Model.avgAwayScoreList.Count());
+        Model.avgHomeConceded = (Model.avgAwayConcededList.Sum() / Model.avgAwayConcededList.Count());
+        Model.avgAwayConceded = (Model.avgAwayConcededList.Sum() / Model.avgAwayConcededList.Count());
+
+    }
+
+
+    <div class="container-fluid sticky-top " width="80%" style="width:80%; vertical-align: top;">
+        <div class="row" align="center" style="align-content:center;">
+
+            @for (int i = 0; i < Model.Results.Count; i++)
+            {
+
+                var homeTeam = @Model.Results.Reverse().ToList()[i].ToString().Split(',')[0];
+                var homeScore = @Model.Results.Reverse().ToList()[i].ToString().Split(',')[1];
+                var awayTeam = @Model.Results.Reverse().ToList()[i].ToString().Split(',')[2];
+                var awayScore = @Model.Results.Reverse().ToList()[i].ToString().Split(',')[3];
+                var teamsTeam = @Model.Teams[1].ToString().Split('*')[0]; //Bath
+
+
+                if (homeTeam.Contains(teamsTeam) || awayTeam.Contains(teamsTeam))
+                {
+                    {
+                        <div class="col-sm-5 headers" align="center">
+                            <b>Recent Result</b>
+                            <div class="row" style="padding:5px;">
+                                <div class="col-md-5" width="40%">
+                                    <div class="col-5 col-sm-5 box results">
+                                        @homeTeam: <b>@homeScore</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="width:20%;">
+                                    <div class="col-2 col-sm-2 box results" width="20%">
+                                        <b>v</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-5" width="40%">
+                                    <div class="col-5 col-sm-5 box results" style="background-color:#d51b1b;">
+                                        @awayTeam: <b>@awayScore</b>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="col-sm-2 headers">
+                        <b>Avg Points</b>
+                        <div class="row" style="padding:5px;">
+                            <div class="col-md-6">
+                                <div class="col-2 col-sm-6 results">
+                                    <b>@Model.avgHomeScore</b>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-2 col-sm-6 results" style="background-color:#d51b1b;">
+                                    <b>@Model.avgAwayScore</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    break;
+
+                }
+
+                else
+                {
+                    continue;
+                }
+
+
+            }
+
+
+            @for (int a = 0; a < Model.Results.Count; a++)
+            {
+                var nextHome = @Model.Fixtures.ToList()[a].ToString().Split(',')[0]; //Bath
+                var nextAway = @Model.Fixtures.ToList()[a].ToString().Split(',')[1]; //Leicester
+                var teamsTeam = @Model.Teams[1].ToString().Split('*')[0]; //Bath
+
+                if (nextHome.Contains(teamsTeam)) //Bath Contains Bath
+                {
+                    {
+
+                        var awayteamResults = new List<int>(); //Create List
+
+                        for (int i = 0; i < Model.Results.Count; i++)
+                        {
+
+                            var resultTeam = Model.Results[i].ToString().Split(',')[2]; //Leicester
+                            var homeTeam = Model.Teams[1].ToString().Split(',')[0]; // Bath
+
+                            if (resultTeam.Contains(nextAway)) //Leicester Contains Leicester
+
+                            {
+                                var score = Model.Results[i].ToString().Split(',')[3]; //Leicester Score
+                                awayteamResults.Add(Int32.Parse(score));
+                                continue;
+                            }
+
+                        }
+
+                        Model.AwayTeamAverageResult = awayteamResults.Sum() / awayteamResults.Count();
+                    }
+                    <div class="col-sm-5 headers">
+                        <b>Predicted Result</b>
+                        <div class="row" style="padding:5px;">
+                            <div class="col-md-6">
+                                <div class="col-5 col-sm-6 results">
+                                    @nextHome: <b>@Model.avgHomeScore</b>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-5 col-sm-6 results" style="background-color:#d51b1b;">
+                                    @nextAway: <b>@Model.AwayTeamAverageResult</b>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    break;
+                }
+
+                else if (nextAway.Contains(teamsTeam))
+                {
+                    {
+
+                        var hometeamResults = new List<int>(); //Create List
+
+                        for (int i = 0; i < Model.Results.Count; i++)
+                        {
+
+                            var resultTeam = Model.Results[i].ToString().Split(',')[0];
+                            var awayTeam = Model.Teams[1].ToString().Split(',')[0];
+
+                            if (resultTeam.Contains(nextHome))
+
+                            {
+                                var score = Model.Results[i].ToString().Split(',')[1];
+                                hometeamResults.Add(Int32.Parse(score));
+                                continue;
+                            }
+
+                        }
+
+                        Model.HomeTeamAverageResult = hometeamResults.Sum() / hometeamResults.Count();
+                    }
+
+                    <div class="col-sm-5 headers">
+                        <b>Predicted Result</b>
+                        <div class="row" style="padding:5px;">
+                            <div class="col-md-6">
+                                <div class="col-5 col-sm-6 results">
+                                    @nextHome: <b>@Model.HomeTeamAverageResult</b>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-5 col-sm-6 results" style="background-color:#d51b1b;">
+                                    @nextAway: <b>@Model.avgAwayScore</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    break;
+                }
+
+                else
+                {
+                    continue;
+                }
+
+            }
+        </div>
+
+    </div>
+
+    <br />
+
+    <div class="container-fluid infoBox" width="80%" style="width:80%;">
+        <figure class="highcharts-figure" style="align-content:center;">
+
+            <div id="points"></div>
+
+        </figure>
+    </div>
+
+    <br />
+
+    <div class="container-fluid infoBox" width="80%" style="width:80%;">
+        <figure class="highcharts-figure" style="align-content:center;">
+
+            <div id="wins"></div>
+
+        </figure>
+    </div>
+
+    <br />
+
+    <div class="container-fluid infoBox" width="80%" style="width:80%;">
+        <figure class="highcharts-figure" style="align-content:center;">
+
+            <div id="points-diff"></div>
+
+        </figure>
+    </div>
+
+    <br />
+    @for (int i = 0; i < 1; i++)
+    {
+        {
+            var info = @Model.Teams[1].ToString().Split('*');
+            <div class="container-fluid infoBox" width="80%" style="width:80%;">
+
+                @info[3]
+
+            </div>
+        }
+    }
+
+    <script>
+
+            var homeresults =  @for (int i = 0; i < 12; i++)
+        {
+            if(@Model.Results[i].ToString().Split(',')[0].Contains(@Model.Teams[1].ToString().Split('*')[0]))
+                {
+                    @(Model.Results[i].ToString().Split(',')[1]);
+
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+            @{
+            Model.HomeWinsList = new List<int>();
+            @for (int i = 0; i < Model.Results.Count; i++)
+             {
+                 if(@Model.Results[i].ToString().Split(',')[0].Contains(@Model.Teams[1].ToString().Split('*')[0]) && Int32.Parse(@Model.Results[i].ToString().Split(',')[1]) > Int32.Parse(@Model.Results[i].ToString().Split(',')[3]))
+                 {
+                     Model.HomeWinsList.Add(1);
+
+                 }
+                 else
+                 {
+                     continue;
+                 }
+             }
+
+            Model.homeWins = Model.HomeWinsList.Count();
+        }
+
+            @{
+            Model.AwayWinsList = new List<int>();
+            @for (int i = 0; i < Model.Results.Count; i++)
+             {
+                 if(@Model.Results[i].ToString().Split(',')[2].Contains(@Model.Teams[1].ToString().Split('*')[0]) && Int32.Parse(@Model.Results[i].ToString().Split(',')[1]) < Int32.Parse(@Model.Results[i].ToString().Split(',')[3]))
+                 {
+                     Model.AwayWinsList.Add(1);
+
+                 }
+                 else
+                 {
+                     continue;
+                 }
+             }
+
+            Model.awayWins = Model.AwayWinsList.Count();
+        }
+
+                 @{
+            Model.HomeLossList = new List<int>();
+            @for (int i = 0; i < Model.Results.Count; i++)
+             {
+                 if(@Model.Results[i].ToString().Split(',')[0].Contains(@Model.Teams[1].ToString().Split('*')[0]) && Int32.Parse(@Model.Results[i].ToString().Split(',')[1]) < Int32.Parse(@Model.Results[i].ToString().Split(',')[3]))
+                 {
+                     Model.HomeLossList.Add(1);
+
+                 }
+                 else
+                 {
+                     continue;
+                 }
+             }
+
+            Model.homeLoss = Model.HomeLossList.Count();
+        }
+
+            @{
+            Model.AwayLossList = new List<int>();
+            @for (int i = 0; i < Model.Results.Count; i++)
+             {
+                 if(@Model.Results[i].ToString().Split(',')[2].Contains(@Model.Teams[1].ToString().Split('*')[0]) && Int32.Parse(@Model.Results[i].ToString().Split(',')[1]) > Int32.Parse(@Model.Results[i].ToString().Split(',')[3]))
+                 {
+                     Model.AwayLossList.Add(1);
+
+                 }
+                 else
+                 {
+                     continue;
+                 }
+             }
+
+            Model.awayLoss = Model.AwayLossList.Count();
+        }
+
+                   @{
+            Model.HomeDrawList = new List<int>();
+            @for (int i = 0; i < Model.Results.Count; i++)
+             {
+                 if(@Model.Results[i].ToString().Split(',')[0].Contains(@Model.Teams[1].ToString().Split('*')[0]) && Int32.Parse(@Model.Results[i].ToString().Split(',')[1]) == Int32.Parse(@Model.Results[i].ToString().Split(',')[3]))
+                 {
+                     Model.HomeDrawList.Add(1);
+
+                 }
+                 else
+                 {
+                     continue;
+                 }
+             }
+
+            Model.homeDraw = Model.HomeDrawList.Count();
+        }
+
+            @{
+            Model.AwayDrawList = new List<int>();
+            @for (int i = 0; i < Model.Results.Count; i++)
+             {
+                 if(@Model.Results[i].ToString().Split(',')[2].Contains(@Model.Teams[1].ToString().Split('*')[0]) && Int32.Parse(@Model.Results[i].ToString().Split(',')[1]) == Int32.Parse(@Model.Results[i].ToString().Split(',')[3]))
+                 {
+                     Model.AwayDrawList.Add(1);
+
+                 }
+                 else
+                 {
+                     continue;
+                 }
+             }
+
+            Model.awayDraw = Model.AwayDrawList.Count();
+        }
+
+        Highcharts.chart('points', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Points Scored Per Game'
+            },
+            subtitle: {
+                text: 'Results'
+            },
+            xAxis: {
+                categories: [
+
+
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Points Scored'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} Pts</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 1,
+                    borderWidth: 0
+                }
+            },
+
+
+            series: [{
+                name: 'Home',
+                color: '#011b51',
+                data: [
+
+                     @for (int i = 0; i < Model.Results.Count; i++)
+                     {
+                         if(@Model.Results[i].ToString().Split(',')[0].Contains(@Model.Teams[1].ToString().Split('*')[0])) /*This last [] needs to be the Team No. Bath = 0 for example*/
+                         {
+                                    @((Model.Results[i].ToString().Split(',')[1]) + ",");
+
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                ,]
+
+            }, {
+                name: 'Away',
+                color: '#d51b1b',
+                data: [
+
+                     @for (int i = 0; i < Model.Results.Count; i++)
+                        {
+                            if(@Model.Results[i].ToString().Split(',')[2].Contains(@Model.Teams[1].ToString().Split('*')[0])) /*This last [] needs to be the Team No. Bath = 0 for example*/
+                                {
+                                    @((Model.Results[i].ToString().Split(',')[3]) + ",");
+
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                ,]
+
+            }]
+
+        });
+
+  Highcharts.chart('wins', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Wins/Losses'
+            },
+            subtitle: {
+                text: 'Wins/Losses'
+            },
+            xAxis: {
+                categories: ["Wins","Losses","Draws"
+
+
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Wins/Losses'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} W/L</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+
+
+            series: [{
+                name: 'Home',
+                color: '#011b51',
+                data: [
+
+                    @Model.homeWins, @Model.homeLoss, @Model.homeDraw
+
+                ,]
+
+            }, {
+                name: 'Away',
+                color: '#d51b1b',
+                data: [
+
+                @Model.awayWins, @Model.awayLoss, @Model.awayDraw
+
+                ,]
+
+            }]
+
+         });
+
+            Highcharts.chart('points-diff', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Points Difference'
+            },
+            subtitle: {
+                text: 'Points Differenc'
+            },
+            xAxis: {
+                categories: [
+
+
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: -40,
+                title: {
+                    text: 'Points Difference'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} W/L</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+
+
+            series: [{
+                name: 'Home',
+                color: '#011b51',
+                data: [
+
+                   @for (int i = 0; i < Model.Results.Count; i++)
+                     {
+                         if(@Model.Results[i].ToString().Split(',')[0].Contains(@Model.Teams[1].ToString().Split('*')[0])) /*This last [] needs to be the Team No. Bath = 0 for example*/
+                         {
+                                    @((Int32.Parse(Model.Results[i].ToString().Split(',')[1])) - (Int32.Parse(Model.Results[i].ToString().Split(',')[3])) + ",");
+
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                ,]
+
+            }, {
+                name: 'Away',
+                color: '#d51b1b',
+                data: [
+
+               @for (int i = 0; i < Model.Results.Count; i++)
+                     {
+                         if(@Model.Results[i].ToString().Split(',')[2].Contains(@Model.Teams[1].ToString().Split('*')[0])) /*This last [] needs to be the Team No. Bath = 0 for example*/
+                         {
+                                    @((Int32.Parse(Model.Results[i].ToString().Split(',')[3])) - (Int32.Parse(Model.Results[i].ToString().Split(',')[1])) + ",");
+
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                ,]
+
+            }]
+
+        });
+
+    </script>
+</body>
+
+
+

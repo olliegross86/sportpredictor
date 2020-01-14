@@ -1,0 +1,235 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+    background-image: url('grass.jpg');
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+.bg-grass {
+    background-image: url('grass.jpg');
+}
+
+.logo {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: right;
+    background-color:antiquewhite;
+}
+
+.resultsbox {
+    width: 80%;
+    max-width: 1500px;
+    display: inline-block;
+}
+.headers {
+    border: 3px solid transparent;
+    position: static;
+    /*border: groove;*/
+    text-align: center;
+    font-size: 1em;
+    line-height: 1;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 1px;
+    border-radius: 15px;
+    display: inline-block;
+}
+.results {
+    background: #011b51;
+    border: groove;
+    text-align: center;
+    font-size: 1em;
+    color: #fff;
+    padding: .5em 0;
+    line-height: 1;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 1px;
+    max-width: 250px;
+    min-width: 50px;
+    border-radius: 15px;
+    display: block;
+    align-content: center;
+}
+
+    .headers:hover {
+        -webkit-transition: -webkit-transform .8s ease-in-out;
+        transition: transform .8s ease-in-out;
+        transform: scale(1.05);  (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) 
+    }
+
+.infoBox {
+    background: #011b51;
+    text-align: justify;
+    font-size: 1em;
+    color: #fff;
+    padding: .5em 0;
+    top: 1px;
+    padding: .5em 0;
+    border: groove;
+    /*max-width: 1500px;
+    width: 200px;
+    height: 150px;
+}
+
+.infoBox:hover {
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+    transition: transform .8s ease-in-out;
+    transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+img {
+    border-radius: 50%;
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+    transition: transform .8s ease-in-out;
+}
+
+    img:hover {
+        /*-webkit-transform: rotate(360deg);
+        transform: rotate(360deg);*/
+        transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    }
+
+.elements {
+   width:50%; 
+   height:auto;
+}
+
+.welcome {
+   
+}
+.welcome:hover {
+    animation: bounce 2.5s infinite;
+    //other browsers -webkit-animation: bounce 2.5s infinite;
+    //webkit browsers -moz-animation: bounce 2.5s infinite;
+    //firefox -o-animation: bounce 2.5s infinite;
+    //opera
+}
+
+
+//CSS3 Bounce Animation
+@-webkit-keyframes bounce {
+    0%, 100%
+
+{
+    -webkit-transform: translateY(0);
+}
+
+50% {
+    -webkit-transform: translateY(-10px);
+}
+
+@media (min-width: 1100px) {
+    body {
+        width: 50%;
+    }
+}
+
+@media (max-width: 1100px) {
+    div {
+        width: 40%;
+    }
+}
+
+@media (max-width: 480px) {
+    div {
+        width: 20%;
+    }
+}
+@-moz-keyframes bounce {
+    0%, 100% {
+        -moz-transform: translateY(0);
+    }
+
+    50% {
+        -moz-transform: translateY(-10px);
+    }
+}
+
+@-o-keyframes bounce {
+    0%, 100% {
+        -o-transform: translateY(0);
+    }
+
+    50% {
+        -o-transform: translateY(-10px);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+
+  

@@ -1,0 +1,53 @@
+﻿@model TeamsModel
+
+@{
+    ViewData["Title"] = "Teams";
+}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <div class="container-fluid teams" style="padding:20px;">
+        <table id="table" width="80%" align="center">
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+          
+            <tbody>
+
+                <tr>
+                    @for (int i = 0; i < 6; i++)
+                    {
+
+                        <td>
+                            <a href="@Url.Action("Team"+@i, "Teams")" class="elements"><img src=@Model.Logos[i] style="width:60%; height:auto;" /></a>   <br />
+                        </td>
+
+
+
+                    }
+                </tr>
+
+                <tr>
+                    @for (int i = 6; i < 7; i++)
+                    {
+
+                        <td>
+                            <br /><br /><a href="@Url.Action("Team" + @i, "Teams")" class="elements"><img src=@Model.Logos[i] style="width:70%; height:auto;" /></a>   <br />
+                        </td>
+
+                    }
+                    @for (int i = 8; i < 13; i++)
+                    {
+
+                        <td>
+                            <br /><br /><a href="@Url.Action("Team" + @i, "Teams")" class="elements"><img src=@Model.Logos[i] style="width:70%; height:auto;" /></a>   <br />
+                        </td>
+
+                    
+                    }
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>

@@ -1,0 +1,52 @@
+﻿@model FixturesModel
+
+@{
+    ViewData["Title"] = "Predictions";
+}
+
+<h1>Predictions</h1>
+<div class="container-fluid">
+    <table class="table table-striped .table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Predictions
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+           
+
+            @*Fixtures*@
+            @for (int i = 0; i < Model.Fixtures.Count; i++)
+            { 
+                {
+                    var fixtures = @Model.Fixtures[i].ToString().Split(',');
+            <tr style="vertical-align:middle; text-align:center">
+                <td style="vertical-align:middle">
+                    @fixtures[0]
+                </td>
+                <td style="vertical-align:middle">
+                    v
+                </td>
+                <td style="font-weight: bold; vertical-align:middle;">
+                    @fixtures[1]
+                </td>
+                @*<td style="vertical-align:middle">
+            @info[2]
+        </td>
+        <td style="font-weight: bold; vertical-align:middle;">
+            @info[3]
+        </td>*@
+
+            </tr>
+                }
+            }
+
+
+
+        </tbody>
+    </table>
+</div>

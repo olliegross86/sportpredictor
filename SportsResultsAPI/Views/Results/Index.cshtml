@@ -1,0 +1,48 @@
+﻿@model ResultsModel
+
+@{
+    ViewData["Title"] = "Results";
+}
+
+<h1>Results</h1>
+<div class="container-fluid">
+    <table class="table table-striped .table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Results
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @for (int i = 0; i < Model.Results.Count; i++)
+            {
+                {
+                    var info = @Model.Results[i].ToString().Split(',');
+                    <tr style="vertical-align:middle; text-align:center">
+                        <td style="vertical-align:middle">
+                            @info[4]
+                        </td>
+                        <td style="vertical-align:middle">
+                            @info[0]
+                        </td>
+                        <td style="font-weight: bold; vertical-align:middle;">
+                            @info[1]
+                        </td>
+                        <td style="vertical-align:middle">
+                            @info[2]
+                        </td>
+                        <td style="font-weight: bold; vertical-align:middle;">
+                            @info[3]
+                        </td>
+
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
